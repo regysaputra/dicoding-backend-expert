@@ -5,6 +5,7 @@ const DatabaseTestHelper = {
   async cleanAllTables() {
     await pool.query(`
       TRUNCATE TABLE
+        comment_likes,
         replies,
         comments,
         threads,

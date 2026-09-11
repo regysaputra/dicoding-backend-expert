@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import ThreadsTableTestHelper from '../../../../tests/ThreadsTableTestHelper.js';
 import UsersTableTestHelper from '../../../../tests/UsersTableTestHelper.js';
 import NotFoundError from '../../../Commons/exceptions/NotFoundError.js';
@@ -18,7 +17,7 @@ describe('ThreadRepositoryPostgres', () => {
   });
 
   describe('addThread function', () => {
-    it('should persist add thread ', async () => {
+    it('should persist add thread', async () => {
       // Arrange
       const id = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f92';
       const userId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f91';
@@ -106,7 +105,6 @@ describe('ThreadRepositoryPostgres', () => {
       // Arrange
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
       const id = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f92';
-      const userId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f91';
 
       // Action
       await UsersTableTestHelper.addUser({});

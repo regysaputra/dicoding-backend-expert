@@ -1,6 +1,7 @@
 import DomainErrorTranslator from "../../Commons/exceptions/DomainErrorTranslator.js";
 import ClientError from "../../Commons/exceptions/ClientError.js";
 
+// eslint-disable-next-line no-unused-vars
 export default function errorHandler (error, req, res, next) {
   if (error.isJoi) {
     const details = error.details || [];
@@ -55,10 +56,10 @@ export default function errorHandler (error, req, res, next) {
     });
   }
 
-  // bila response tersebut error, tangani sesuai kebutuhan
+  // translate domain error
   const translatedError = DomainErrorTranslator.translate(error);
 
-  // penanganan client error secara internal.
+  // internal error
   if (translatedError instanceof ClientError) {
     return res.status(translatedError.statusCode).json({
       status: 'fail',
@@ -74,9 +75,6 @@ export default function errorHandler (error, req, res, next) {
     });
   }
 
-  //console.error('UNHANDLED ERROR:', error?.message, error?.stack);
-
-  // penanganan server error sesuai kebutuhan
   return res.status(500).json({
     status: 'error',
     message: 'terjadi kegagalan pada server kami',

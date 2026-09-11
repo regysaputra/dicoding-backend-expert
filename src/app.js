@@ -3,7 +3,6 @@ import container from './Infrastructures/container.js';
 import config from './Commons/config.js';
 
 const start = async () => {
-  console.log('ENV :', process.env.NODE_ENV);
   const app = await createServer(container);
   const { host, port } = config.app;
 

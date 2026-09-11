@@ -16,7 +16,7 @@ describe('AddReply entities', () => {
     const payload = {
       content: 123,
     };
-    const id = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f91';
+
     const commentId = 'comment-123';
     const userId = 'user-123';
 
@@ -29,7 +29,7 @@ describe('AddReply entities', () => {
     const payload = {
       content: 'reply',
     };
-    const id = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f91';
+
     const commentId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f92';
     const userId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f93';
 

@@ -9,6 +9,7 @@
     "start:dev": "cross-env NODE_ENV=development nodemon src/app.js",
     "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js -i",
     "test:watch": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --watch -i",
+    "test:use_case": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js src/Applications/use_case --runInBand",
     "test:coverage": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage -i",
     "migrate": "node-pg-migrate",
     "migrate:test": "dotenv -e .test.env -- sh -c 'DATABASE_URL=\"postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}?sslmode=no-verify\" NODE_OPTIONS=--dns-result-order=ipv4first node-pg-migrate --database-url \"$DATABASE_URL\" \"$@\"' --",

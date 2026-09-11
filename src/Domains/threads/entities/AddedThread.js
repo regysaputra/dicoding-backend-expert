@@ -11,7 +11,6 @@ export default class AddedThread {
     this.userId = userId;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   #verify({
     id, title, userId,
   }) {

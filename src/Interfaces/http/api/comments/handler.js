@@ -1,5 +1,6 @@
 import AddCommentUseCase from "../../../../Applications/use_case/AddCommentUseCase.js";
 import DeleteCommentUseCase from "../../../../Applications/use_case/DeleteCommentUseCase.js";
+import LikesCommentUseCase from "../../../../Applications/use_case/LikesCommentUseCase.js";
 
 export default class CommentsHandler {
   #container;
@@ -9,6 +10,7 @@ export default class CommentsHandler {
 
     this.postCommentHandler = this.postCommentHandler.bind(this);
     this.deleteCommentHandler = this.deleteCommentHandler.bind(this);
+    this.likesCommentHandler = this.likesCommentHandler.bind(this);
   }
 
   async postCommentHandler(req, res, next) {
@@ -42,6 +44,24 @@ export default class CommentsHandler {
         req.params.commentId,
         req.credentials.id
       );
+
+      res.json({
+        status: 'success'
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async likesCommentHandler(req, res, next) {
+    const likesCommentUseCase = this.#container.getInstance(LikesCommentUseCase.name);
+
+    try {
+      await likesCommentUseCase.execute({
+        threadId: req.params.threadId,
+        commentId: req.params.commentId,
+        userId: req.credentials.id
+      });
 
       res.json({
         status: 'success'

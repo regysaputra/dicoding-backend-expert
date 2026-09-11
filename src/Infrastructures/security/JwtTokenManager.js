@@ -1,7 +1,7 @@
-import AuthenticationTokenManager from '../../Applications/security/AuthenticationTokenManager.js';
-import config from '../../Commons/config.js';
-import InvariantError from '../../Commons/exceptions/InvariantError.js';
-import { randomUUID } from "node:crypto";
+import AuthenticationTokenManager from "../../Applications/security/AuthenticationTokenManager.js";
+import config from "../../Commons/config.js";
+import InvariantError from "../../Commons/exceptions/InvariantError.js";
+import {randomUUID} from "node:crypto";
 
 class JwtTokenManager extends AuthenticationTokenManager {
   constructor(jwt) {
@@ -24,6 +24,7 @@ class JwtTokenManager extends AuthenticationTokenManager {
     try {
       this._jwt.verify(token, config.auth.accessTokenKey);
     } catch (error) {
+      void error;
       throw new InvariantError('access token tidak valid');
     }
   }
@@ -32,13 +33,13 @@ class JwtTokenManager extends AuthenticationTokenManager {
     try {
       this._jwt.verify(token, config.auth.refreshTokenKey);
     } catch (error) {
+      void error;
       throw new InvariantError('refresh token tidak valid');
     }
   }
 
   async decodePayload(token) {
-    const payload = this._jwt.decode(token);
-    return payload;
+    return this._jwt.decode(token);
   }
 }
 

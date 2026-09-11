@@ -4,27 +4,16 @@
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-  pgm.createTable("replies", {
-    id: {
+  pgm.createTable("comment_likes", {
+    comment_id: {
       type: "uuid",
-      primaryKey: true,
-    },
-    content: {
-      type: "TEXT",
+      references: "comments",
       notNull: true,
-    },
-    is_deleted: {
-      type: "BOOLEAN",
-      notNull: true,
-      default: false,
     },
     user_id: {
       type: "uuid",
       references: "users",
-    },
-    comment_id: {
-      type: "uuid",
-      references: "comments",
+      notNull: true,
     },
     created_at: {
       type: "TIMESTAMP",
@@ -32,6 +21,12 @@ export const up = (pgm) => {
       default: pgm.func("current_timestamp"),
     },
   });
+
+  pgm.addConstraint("comment_likes", "comment_likes_unique_comment_user", {
+    unique: ["comment_id", "user_id"],
+  });
+  pgm.createIndex("comment_likes", "comment_id");
+  pgm.createIndex("comment_likes", "user_id");
 };
 
 /**
@@ -39,5 +34,5 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-  pgm.dropTable("replies");
+  pgm.dropTable("comment_likes");
 };
