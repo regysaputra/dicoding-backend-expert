@@ -39,18 +39,18 @@ jobs:
       - name: npm install migrate and test
         run: |
           npm ci
-          npm run migrate:test -- up
+          npm run migrate up
           npm run test
         env:
           CI: true
           HOST: ${{ vars.HOST }}
           PORT: ${{ vars.PORT }}
-          PGHOST: ${{ vars.PGHOST }}
-          PGPORT: ${{ vars.PGPORT }}
+          PGHOST: localhost
+          PGPORT: 5432
           PGUSER: ${{ vars.PGUSER }}
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
           PGDATABASE: ${{ vars.PGDATABASE }}
-          PGSSLMODE: ${{ vars.PGSSLMODE }}
+          PGSSLMODE: disable
           ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
           REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
           ACCESS_TOKEN_AGE: ${{ vars.ACCESS_TOKEN_AGE }}

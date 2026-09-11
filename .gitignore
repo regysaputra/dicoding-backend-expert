@@ -4,3 +4,5 @@ node_modules
 config/database/test.json
 coverage
 forum-api.pem
+.env
+.test.env
