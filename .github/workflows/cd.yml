@@ -1,0 +1,52 @@
+name: cd.yml
+on:
+  push:
+    branches:
+      - main
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - name: SSH and deploy app
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USERNAME }}
+            key: ${{ secrets.SSH_KEY }}
+            port: ${{ secrets.SSH_PORT }}
+            script: |
+              if [ -d "$HOME/dicoding-backend-expert" ]; then
+                echo "Directory exists. Pulling latest changes..."
+                cd $HOME/dicoding-backend-expert
+                git pull origin main
+              else
+                echo "Directory does not exist. Cloning repository..."
+                git clone https://github.com/regysaputra/dicoding-backend-expert.git
+                cd $HOME/dicoding-backend-expert
+              fi
+              
+              # create .env file
+              cat <<EOT > .env
+              NODE_ENV=production
+              HOST=${{ vars.HOST }}
+              PORT=${{ vars.PORT }}
+              PGHOST=${{ vars.PGHOST }}
+              PGPORT=${{ vars.PGPORT }}
+              PGUSER=${{ vars.PGUSER }}
+              PGPASSWORD=${{ secrets.PGPASSWORD }}
+              PGDATABASE=${{ vars.PGDATABASE }}
+              DB_HOST=${{ secrets.DB_HOST }}
+              DB_PORT=${{ secrets.DB_PORT }}
+              DB_USERNAME=${{ secrets.DB_USERNAME }}
+              DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+              DB_NAME=${{ secrets.DB_NAME }}
+              JWT_SECRET=${{ secrets.JWT_SECRET }}
+              EOT
+              
+              npm ci --omit=dev --no-audit --no-fund
+              npm run migrate:test -- up
+              npm run migrate up
+              
+              # Start or restart the app using the production environment block
+              pm2 start ecosystem.config.js --env production
+              pm2 save

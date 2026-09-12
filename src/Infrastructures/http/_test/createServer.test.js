@@ -766,7 +766,7 @@ describe('HTTP server', () => {
         .put(`/threads/${threadId}/comments/${commentId}/likes`)
         .set('Authorization', `Bearer ${accessToken}`);
 
-      expect(response.status).toEqual(201);
+      expect(response.status).toEqual(200);
       expect(response.body.status).toEqual('success');
     });
 
