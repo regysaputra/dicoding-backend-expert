@@ -43,6 +43,15 @@ jobs:
               JWT_SECRET=${{ secrets.JWT_SECRET }}
               EOT
               
+              # create .test.env file
+              cat <<EOT > .test.env
+              NODE_ENV=test
+              PGHOST=${{ vars.PGHOST_TEST }}
+              PGPORT=${{ vars.PGPORT }}
+              PGPASSWORD=${{ secrets.PGPASSWORD_TEST }}
+              PGUSER=${{ vars.PGUSER }}
+              PGDATABASE=${{ vars.PGDATABASE_TEST }}
+              
               npm ci --omit=dev --no-audit --no-fund
               npm run migrate:test -- up
               npm run migrate up
