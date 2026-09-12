@@ -15,6 +15,7 @@ export default async function authenticateToken(req, res, next) {
   try {
     await container.getInstance(AuthenticationTokenManager.name).verifyAccessToken(token);
   } catch (err) {
+    void err;
     const authenticationError = new AuthenticationError('access token tidak valid');
     return next(authenticationError);
   }

@@ -17,11 +17,13 @@ export const up = (pgm) => {
       type: "TEXT",
       notNull: true,
     },
+    // eslint-disable-next-line camelcase
     user_id: {
       type: "uuid",
       references: "users",
       notNull: true,
     },
+    // eslint-disable-next-line camelcase
     created_at: {
       type: "TIMESTAMP",
       notNull: true,

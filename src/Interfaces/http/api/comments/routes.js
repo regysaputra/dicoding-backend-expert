@@ -8,6 +8,7 @@ const createCommentsRouter = (handler) =>{
 
   router.post("/:threadId/comments", authenticateToken, validateRequestBody(addCommentSchema), handler.postCommentHandler);
   router.delete("/:threadId/comments/:commentId", authenticateToken, handler.deleteCommentHandler);
+  router.put("/:threadId/comments/:commentId/likes", authenticateToken, handler.likesCommentHandler);
 
   return router;
 };

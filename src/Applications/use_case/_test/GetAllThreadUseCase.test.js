@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import CommentRepository from '../../../Domains/comments/CommentRepository.js';
 import ReplyRepository from '../../../Domains/replies/ReplyRepository.js';
 import ThreadRepository from '../../../Domains/threads/ThreadRepository.js';

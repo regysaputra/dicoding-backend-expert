@@ -9,7 +9,6 @@ export default class AddThread {
     this.userId = userId;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   #verifyPayload({ title, body }) {
     if (!title || !body) {
       throw new Error('ADD_THREAD.NOT_CONTAIN_NEEDED_PROPERTY');

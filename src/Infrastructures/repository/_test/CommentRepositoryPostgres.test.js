@@ -108,7 +108,7 @@ describe('CommentRepositoryPostgres', () => {
     }, 1000);
 
     it('should not throw NotFoundError when comment exist', async () => {
-      // Arrang
+      // Arrange
       const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
       await UsersTableTestHelper.addUser({});
       await ThreadsTableTestHelper.addThread({});
@@ -162,7 +162,6 @@ describe('CommentRepositoryPostgres', () => {
       // Arrange
       const id = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f93';
       const threadId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f92';
-      const userId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f91';
 
       const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
       await UsersTableTestHelper.addUser({});

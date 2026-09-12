@@ -37,7 +37,7 @@ describe('JwtTokenManager', () => {
       const jwtTokenManager = new JwtTokenManager(mockJwtToken);
 
       // Action
-      const refreshToken = await jwtTokenManager.createRefreshToken(payload);
+      await jwtTokenManager.createRefreshToken(payload);
 
       // Assert
       expect(mockJwtToken.sign).toHaveBeenCalledWith(

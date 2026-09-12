@@ -14,21 +14,33 @@ import DeleteReplyUseCase from "../../../Applications/use_case/DeleteReplyUseCas
 import AddThreadUseCase from "../../../Applications/use_case/AddThreadUseCase.js";
 import GetThreadUseCase from "../../../Applications/use_case/GetThreadUseCase.js";
 import GetAllThreadUseCase from "../../../Applications/use_case/GetAllThreadUseCase.js";
+import LikesCommentUseCase from "../../../Applications/use_case/LikesCommentUseCase.js";
 
 describe('HTTP server', () => {
-  const createApp = () => createServer(container);
+  let shouldCleanDatabase = false;
+  const createApp = () => {
+       shouldCleanDatabase = true;
+        return createServer(container);
+  };
+
+  beforeEach(() => {
+    shouldCleanDatabase = false;
+  });
 
   afterAll(async () => {
     await pool.end();
   });
 
   afterEach(async () => {
-    await DatabaseTestHelper.cleanAllTables()
+    await DatabaseTestHelper.cleanAllTables();
+    if (shouldCleanDatabase) {
+      await DatabaseTestHelper.cleanAllTables();
+    }
   });
 
   it('should response 404 when request unregistered route', async () => {
     // Arrange
-    const app = await createApp();
+    const app = await createApp(container);
 
     // Action
     const response = await request(app).get('/unregisteredRoute');
@@ -720,6 +732,76 @@ describe('HTTP server', () => {
         .set('Authorization', `Bearer ${accessToken}`);
 
       // Assert
+      expect(response.status).toEqual(500);
+      expect(response.body.status).toEqual('error');
+      expect(response.body.message).toEqual('terjadi kegagalan pada server kami');
+    });
+  });
+
+  describe("when PUT /threads/:threadId/comments/:commentId/likes", () => {
+    it("should response 200 when like comment successfuly", async () => {
+      const app = await createApp();
+
+      await request(app).post('/users').send({
+        username: 'dicoding',
+        password: 'secret',
+        fullname: 'Dicoding Indonesia'
+      });
+      const authResponse = await request(app).post('/authentications').send({username: 'dicoding', password: 'secret'});
+      const {accessToken} = authResponse.body.data;
+
+      const threadRes = await request(app)
+        .post('/threads')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({title: 't1', body: 'b1'});
+      const threadId = threadRes.body.data.addedThread.id;
+
+      const commentRes = await request(app)
+        .post(`/threads/${threadId}/comments`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send({content: 'a comment'});
+      const commentId = commentRes.body.data.addedComment.id;
+
+      const response = await request(app)
+        .put(`/threads/${threadId}/comments/${commentId}/likes`)
+        .set('Authorization', `Bearer ${accessToken}`);
+
+      expect(response.status).toEqual(200);
+      expect(response.body.status).toEqual('success');
+    });
+
+    it("should handle server error correctly", async () => {
+      const realApp = await createApp();
+
+      await request(realApp)
+        .post('/users')
+        .send({ username: 'dicoding', password: 'secret', fullname: 'Dicoding Indonesia' });
+
+      const authResponse = await request(realApp)
+        .post('/authentications')
+        .send({ username: 'dicoding', password: 'secret' });
+
+      const { accessToken } = authResponse.body.data;
+
+      const fakeContainer = {
+        getInstance: (key) => {
+          if (key === LikesCommentUseCase.name) {
+            return {
+              execute: async () => {
+                throw new Error('unexpected failure like comment');
+              },
+            };
+          }
+          throw new Error('unknown dependency');
+        },
+      };
+
+      const app = await createServer(fakeContainer);
+
+      const response = await request(app)
+        .put('/threads/thread-123/comments/comment-123/likes')
+        .set('Authorization', `Bearer ${accessToken}`);
+
       expect(response.status).toEqual(500);
       expect(response.body.status).toEqual('error');
       expect(response.body.message).toEqual('terjadi kegagalan pada server kami');

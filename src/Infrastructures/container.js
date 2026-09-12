@@ -35,6 +35,9 @@ import GetAllThreadUseCase from "../Applications/use_case/GetAllThreadUseCase.js
 import GetThreadUseCase from "../Applications/use_case/GetThreadUseCase.js";
 import DeleteCommentUseCase from "../Applications/use_case/DeleteCommentUseCase.js";
 import DeleteReplyUseCase from "../Applications/use_case/DeleteReplyUseCase.js";
+import CommentLikeRepository from "../Domains/comments/CommentLikeRepository.js";
+import CommentLikeRepositoryPostgres from "./repository/CommentLikeRepositoryPostgres.js";
+import LikesCommentUseCase from "../Applications/use_case/LikesCommentUseCase.js";
 
 
 // creating container
@@ -95,6 +98,17 @@ container.register([
         {
           concrete: uuidv7,
         },
+      ],
+    },
+  },
+  {
+    key: CommentLikeRepository.name,
+    Class: CommentLikeRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool,
+        }
       ],
     },
   },
@@ -297,6 +311,10 @@ container.register([
           name: 'replyRepository',
           internal: ReplyRepository.name,
         },
+        {
+          name: 'commentLikeRepository',
+          internal: CommentLikeRepository.name,
+        }
       ],
     },
   },
@@ -338,6 +356,27 @@ container.register([
       ],
     },
   },
+  {
+    key: LikesCommentUseCase.name,
+    Class: LikesCommentUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'threadRepository',
+          internal: ThreadRepository.name,
+        },
+        {
+          name: 'commentRepository',
+          internal: CommentRepository.name,
+        },
+        {
+          name: 'commentLikesRepository',
+          internal: CommentLikeRepository.name,
+        },
+      ],
+    }
+  }
 ]);
 
 export default container;

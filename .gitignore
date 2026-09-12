@@ -1,9 +1,8 @@
 node_modules
-package-lock.json
 .idea
 .vscode
 config/database/test.json
 coverage
+forum-api.pem
 .env
 .test.env
-forum-api.pem

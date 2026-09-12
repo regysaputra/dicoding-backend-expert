@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import AuthorizationError from '../../../Commons/exceptions/AuthorizationError.js';
 import CommentRepository from '../../../Domains/comments/CommentRepository.js';
 import ThreadRepository from '../../../Domains/threads/ThreadRepository.js';

@@ -5,13 +5,15 @@ class GetThreadUseCase {
 
   #replyRepository;
 
-  constructor({ threadRepository, commentRepository, replyRepository }) {
+  #commentLikeRepository;
+
+  constructor({ threadRepository, commentRepository, replyRepository, commentLikeRepository }) {
     this.#threadRepository = threadRepository;
     this.#commentRepository = commentRepository;
     this.#replyRepository = replyRepository;
+    this.#commentLikeRepository = commentLikeRepository;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   async #transform(thread, comments, replies) {
     // Group reply by comment id
     const groupedReplies = {};
@@ -36,6 +38,7 @@ class GetThreadUseCase {
         content: comment.is_deleted ? "**komentar telah dihapus**": comment.content,
         date: comment.created_at,
         username: comment.username,
+        likeCount: comment.likeCount || 0,
         replies: groupedReplies[comment.id] || [],
       }
     });
@@ -61,6 +64,17 @@ class GetThreadUseCase {
       const commentIds = comments.map((comment) => comment.id);
 
       replies = await this.#replyRepository.getRepliesByCommentIds(commentIds);
+
+      const likeCountRows = await this.#commentLikeRepository.getLikesCountByCommentIds(commentIds);
+
+      const likeCountLookup = likeCountRows.reduce((acc, row) => {
+        acc[row.comment_id] = row.count;
+        return acc;
+      }, {});
+
+      for (const comment of comments) {
+        comment.likeCount = likeCountLookup[comment.id] || 0;
+      }
     }
 
     return this.#transform(thread, comments, replies);

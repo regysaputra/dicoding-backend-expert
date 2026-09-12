@@ -12,7 +12,6 @@ describe('AddCommentUseCase', () => {
       content: 'comment',
     };
 
-    const id = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f93';
     const threadId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f91';
     const userId = '01890f2f-7b6e-7a2a-8f4b-3d8a1e2c4f92';
 

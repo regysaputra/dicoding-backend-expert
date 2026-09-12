@@ -9,7 +9,6 @@ export default class AddReply {
     this.userId = userId;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   #verifyPayload({ content }) {
     if (!content) {
       throw new Error('ADD_REPLY.NOT_CONTAIN_NEEDED_PROPERTY');

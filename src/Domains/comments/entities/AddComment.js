@@ -8,7 +8,6 @@ export default class AddComment {
     this.userId = userId;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   #verifyPayload({ content }) {
     if (!content) {
       throw new Error('ADD_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
