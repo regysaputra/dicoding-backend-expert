@@ -25,6 +25,9 @@ jobs:
                 cd $HOME/dicoding-backend-expert
               fi
               
+              echo ${{ vars.PGHOST }}
+              echo ${{ vars.PGHOST_TEST }}
+              
               # create .env file
               cat <<EOF > .env
               NODE_ENV=production
@@ -37,7 +40,7 @@ jobs:
               PGDATABASE=${{ vars.PGDATABASE }}
               ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}
               REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}
-              ACCCESS_TOKEN_AGE=${{ vars.ACCCESS_TOKEN_AGE }}
+              ACCCESS_TOKEN_AGE=${{ vars.ACCESS_TOKEN_AGE }}
               EOF
               
               # create .test.env file
@@ -51,7 +54,7 @@ jobs:
               PGSSLMODE=no-verify
               ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}
               REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}
-              ACCCESS_TOKEN_AGE=${{ vars.ACCCESS_TOKEN_AGE }}
+              ACCCESS_TOKEN_AGE=${{ vars.ACCESS_TOKEN_AGE }}
               EOF
               
               npm ci --omit=dev --no-audit --no-fund
