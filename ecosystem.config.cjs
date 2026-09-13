@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export default {
+module.exports = {
   apps: [
     {
       name: 'forum-api',
@@ -9,17 +9,7 @@ export default {
       autorestart: true,
       watch: false,
       max_memory_restart: '1G',
-      env: {
-        NODE_ENV: 'development'
-      },
-      env_production: {
-        NODE_ENV: 'production',
-        PORT: 3000
-      },
-      env_staging: {
-        NODE_ENV: 'staging',
-        PORT: 3001
-      }
+      env_production: { NODE_ENV: 'production', PORT: 3000 }
     }
   ]
 };
