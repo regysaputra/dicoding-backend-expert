@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-module.exports = {
+export default {
   apps: [
     {
       name: 'forum-api',
