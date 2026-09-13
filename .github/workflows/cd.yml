@@ -35,12 +35,9 @@ jobs:
               PGUSER=${{ vars.PGUSER }}
               PGPASSWORD=${{ secrets.PGPASSWORD }}
               PGDATABASE=${{ vars.PGDATABASE }}
-              DB_HOST=${{ secrets.DB_HOST }}
-              DB_PORT=${{ secrets.DB_PORT }}
-              DB_USERNAME=${{ secrets.DB_USERNAME }}
-              DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-              DB_NAME=${{ secrets.DB_NAME }}
-              JWT_SECRET=${{ secrets.JWT_SECRET }}
+              ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}
+              REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}
+              ACCCESS_TOKEN_AGE=${{ vars.ACCCESS_TOKEN_AGE }}
               EOF
               
               # create .test.env file
@@ -49,8 +46,12 @@ jobs:
               PGHOST=${{ vars.PGHOST_TEST }}
               PGPORT=${{ vars.PGPORT }}
               PGPASSWORD=${{ secrets.PGPASSWORD_TEST }}
-              PGUSER=${{ vars.PGUSER }}
+              PGUSER=${{ vars.PGUSER_TEST }}
               PGDATABASE=${{ vars.PGDATABASE_TEST }}
+              PGSSLMODE=no-verify
+              ACCESS_TOKEN_KEY=${{ secrets.ACCESS_TOKEN_KEY }}
+              REFRESH_TOKEN_KEY=${{ secrets.REFRESH_TOKEN_KEY }}
+              ACCCESS_TOKEN_AGE=${{ vars.ACCCESS_TOKEN_AGE }}
               EOF
               
               npm ci --omit=dev --no-audit --no-fund
