@@ -26,7 +26,7 @@ jobs:
               fi
               
               # create .env file
-              cat <<EOT > .env
+              cat <<EOF > .env
               NODE_ENV=production
               HOST=${{ vars.HOST }}
               PORT=${{ vars.PORT }}
@@ -41,16 +41,17 @@ jobs:
               DB_PASSWORD=${{ secrets.DB_PASSWORD }}
               DB_NAME=${{ secrets.DB_NAME }}
               JWT_SECRET=${{ secrets.JWT_SECRET }}
-              EOT
+              EOF
               
               # create .test.env file
-              cat <<EOT > .test.env
+              cat <<EOF > .test.env
               NODE_ENV=test
               PGHOST=${{ vars.PGHOST_TEST }}
               PGPORT=${{ vars.PGPORT }}
               PGPASSWORD=${{ secrets.PGPASSWORD_TEST }}
               PGUSER=${{ vars.PGUSER }}
               PGDATABASE=${{ vars.PGDATABASE_TEST }}
+              EOF
               
               npm ci --omit=dev --no-audit --no-fund
               npm run migrate:test -- up
