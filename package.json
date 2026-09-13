@@ -22,12 +22,14 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.6.1",
+    "dotenv-cli": "^11.0.0",
     "express": "^5.0.1",
     "globals": "^17.5.0",
     "instances-container": "^2.0.6",
     "joi": "^18.1.2",
     "jsonwebtoken": "^9.0.2",
     "nanoid": "^5.0.9",
+    "node-pg-migrate": "^9.0.0",
     "pg": "^8.16.3",
     "uuidv7": "^1.2.1"
   },
@@ -37,13 +39,11 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@types/jest": "^30.0.0",
     "cross-env": "^10.1.0",
-    "dotenv-cli": "^11.0.0",
     "eslint": "^9.38.0",
     "eslint-config-dicodingacademy": "^0.9.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jest": "^29.15.2",
     "jest": "^30.3.0",
-    "node-pg-migrate": "^8.0.4",
     "nodemon": "^3.1.9",
     "prettier": "^3.8.3",
     "supertest": "^7.1.4"
