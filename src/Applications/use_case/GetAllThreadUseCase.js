@@ -43,8 +43,10 @@ class GetAllThreadUseCase {
   }
 
   async execute() {
+    // Get all threads from the repository
     const threads = await this.#threadRepository.getAllThread();
 
+    // Transform the threads to include total discussion count
     return this.#transform(threads);
   }
 }
