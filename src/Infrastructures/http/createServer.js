@@ -14,7 +14,7 @@ const createServer = async (container) => {
 
   // Health check endpoint
   app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'success', message: 'Server is healthy' });
+    res.status(200).json({ status: 'success', message: 'ok' });
   });
 
   // Register routes
