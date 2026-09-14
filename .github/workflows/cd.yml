@@ -47,7 +47,7 @@ jobs:
               cat <<EOF > .test.env
               NODE_ENV=test
               PGHOST=${{ vars.PGHOST_TEST }}
-              PGPORT=${{ vars.PGPORT }}
+              PGPORT=${{ vars.PGPORT_TEST }}
               PGPASSWORD=${{ secrets.PGPASSWORD_TEST }}
               PGUSER=${{ vars.PGUSER_TEST }}
               PGDATABASE=${{ vars.PGDATABASE_TEST }}
