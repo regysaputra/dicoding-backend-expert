@@ -49,6 +49,19 @@ describe('HTTP server', () => {
     expect(response.status).toEqual(404);
   });
 
+  it('should response 200 when request /health endpoint', async () => {
+    // Arrange
+    const app = await createApp();
+
+    // Action
+    const response = await request(app).get('/health');
+
+    // Assert
+    expect(response.status).toEqual(200);
+    expect(response.body.status).toEqual('success');
+    expect(response.body.message).toEqual('ok');
+  });
+
   describe('when POST /users', () => {
     it('should response 201 and persisted user', async () => {
       // Arrange
