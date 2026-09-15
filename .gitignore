@@ -6,4 +6,3 @@ coverage
 forum-api.pem
 .env
 .test.env
-default
